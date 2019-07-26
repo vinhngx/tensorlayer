@@ -98,7 +98,8 @@ te_pairs, te_y = create_pairs(X_test, digit_indices)
 print_freq = 5
 train_weights = model.trainable_weights
 optimizer = tf.optimizers.RMSprop()
-
+if os.environ.get('TF_ENABLE_AUTO_MIXED_PRECISION', default='0') == '1':
+    optimizer = tf.train.experimental.enable_mixed_precision_graph_rewrite(optimizer)
 
 @tf.function
 def train_step(X_batch, y_batch):
