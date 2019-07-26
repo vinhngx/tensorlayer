@@ -88,6 +88,8 @@ shuffle_buffer_size = 128  # 100
 train_weights = net.trainable_weights
 # learning_rate = tf.Variable(init_learning_rate)
 optimizer = tf.optimizers.Adam(learning_rate)
+if os.environ.get("TF_ENABLE_AUTO_MIXED_PRECISION", default="0") == "1":
+    optimizer = tf.compat.v1.train.experimental.enable_mixed_precision_graph_rewrite(optimizer)
 
 
 def generator_train():
